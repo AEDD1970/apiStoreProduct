@@ -24,7 +24,7 @@ export class StoreController {
   }
 
   @Patch(':id')
-  update(@Param('id') _id: string, @Body() updateStoreDto: UpdateStoreDto) {
+  update(@Param('id') _id: string, @Body() updateStoreDto: any) {
     return this.storeService.update(_id, updateStoreDto);
   }
 

@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { Store, StoreDocument } from './schema/store.schema';
 import { Model } from 'mongoose';
-import { countries } from 'src/utils/_ISO-countries';
 import { GetStoreDto } from './dto/get-store.dto';
+import { validationCity } from 'src/utils/logic/global/validateBussines';
 
 @Injectable()
 export class StoreService {
@@ -15,18 +15,11 @@ export class StoreService {
     try {
       const { name, city, address } = createStoreDto;
       const cityToUpper = city.toUpperCase()
-      const validateCodeCity = countries.map(item => item.code)
-      console.log(!validateCodeCity.includes(cityToUpper), cityToUpper.length, cityToUpper.length < 3, "que es")
+
       //validate code city 
-      if (cityToUpper.length > 3) {
-        return { message: `the city code input ${city} wants to see three character`, status: 404 }
-      }
-      if (!validateCodeCity.includes(cityToUpper)) {
-        return {
-          message: 'code city invalid  ', status: 404, data: {
-            codeCity: countries
-          }
-        };
+      const errors = await validationCity(cityToUpper)
+      if (errors) {
+        throw errors
       }
       // find exit store register
       const strore = await this.storeModel.findOne({ name, city });
@@ -34,21 +27,24 @@ export class StoreService {
         //save store
         const saveStore = await this.storeModel.create({
           name,
-          city,
+          city: cityToUpper,
           address
         });
         if (saveStore) {
-          return { message: 'create user', status: 201 };
+          throw { message: 'create store', status: "CREATED" };
         } else {
-          return { message: 'ups error create store', status: 500 };
+          throw { message: 'ups error create store', status: "SERVICE_UNAVAILABLE" };
         }
       }
       else {
-        return { message: 'There is already a store with that name in that city', status: 404 };
+        throw { message: 'There is already a store with that name in that city', status: 'BAD_REQUEST' };
       }
     } catch (error) {
-      console.log(error)
-      return { message: 'ups error server', status: 500 };
+      if (!error.message) {
+        throw new HttpException('ups error server', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      const { status, ...message } = error
+      throw new HttpException(message, HttpStatus[status as keyof typeof HttpStatus])
     }
   }
 
@@ -67,25 +63,30 @@ export class StoreService {
         .exec();
 
       if (getAllStore.length === 0) {
-        return { message: 'not have data', status: 404 };
+        throw { message: 'not have data', status: "BAD_REQUEST" };
       } else {
         return {
           data: getAllStore,
           page_total: page_total,
-          status: 200,
+          status: "OK",
         };
       }
     } catch (error) {
-      return { message: 'ups error server', status: 500 };
+      if (!error.message) {
+        throw new HttpException('ups error server', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      const { status, ...message } = error
+      throw new HttpException(message, HttpStatus[status as keyof typeof HttpStatus])
     }
   }
 
   async findOne(id: string) {
-    console.log(id)
     try {
-      const getStore = await this.storeModel.findById(id)
+      const getStore = await this.storeModel.findById(id, { __v: 0 })
+      if (!getStore) {
+        throw { message: 'store not exist', status: "NOT_FOUND" };
+      }
       return {
-        status: 200,
         data: {
           store: getStore
         },
@@ -93,19 +94,40 @@ export class StoreService {
       }
 
     } catch (error) {
-      return { message: 'ups error server', status: 500 };
+      if (!error.message) {
+        throw new HttpException('ups error server', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      const { status, ...message } = error
+      throw new HttpException(message, HttpStatus[status as keyof typeof HttpStatus])
     }
   }
 
   async update(_id: string, updateStoreDto: UpdateStoreDto) {
-    const {name, city, address } = updateStoreDto
-     return await this.storeModel.updateOne({_id}, { 
-      $set: {
-          "name" : name,
-          "city": city,
+    try {
+      const { name, city, address } = updateStoreDto
+      const cityToUpper = city.toUpperCase()
+      //validate code city 
+      const errors = await validationCity(cityToUpper)
+      if (errors) {
+        throw errors
+      }
+      const setStore = await this.storeModel.updateOne({ _id }, {
+        $set: {
+          "name": name,
+          "city": cityToUpper,
           "address": address
-      }}
-    );
+        }
+      });
+      if (setStore) {
+        throw { message: 'update store', status: "OK" };
+      }
+    } catch (error) {
+      if (!error.message) {
+        throw new HttpException('ups error server', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      const { status, ...message } = error
+      throw new HttpException(message, HttpStatus[status as keyof typeof HttpStatus])
+    }
   }
 
   async delete(_id: string) {
@@ -113,14 +135,18 @@ export class StoreService {
       const deleteStore = await this.storeModel.deleteOne({ _id })
       const { deletedCount } = deleteStore
       if (deletedCount === 1) {
-        return { message: "delete store", status: 200 }
+        throw { message: "delete store" }
       }
       else {
-        return { message: 'ups, something went wrong when deleting the store', status: 404 };
+        throw { message: 'ups, something went wrong when deleting the store', status: "BAD_REQUEST" };
       }
 
     } catch (error) {
-      return { message: 'ups error server', status: 500 };
+      if (!error.message) {
+        throw new HttpException('ups error server', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      const { status, ...message } = error
+      throw new HttpException(message, HttpStatus[status as keyof typeof HttpStatus])
     }
   }
 }
