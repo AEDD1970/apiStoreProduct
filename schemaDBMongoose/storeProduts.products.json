@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "65b67c578f64d97fdd76e4f2"
+  },
+  "name": "harina trigo",
+  "price": 2000,
+  "type": "PERISHABLE",
+  "dateCreate": {
+    "$date": "2024-01-28T16:07:08.268Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b67cfb8f64d97fdd76e4f8"
+  },
+  "name": "harina pan",
+  "price": 2000,
+  "type": "PERISHABLE",
+  "dateCreate": {
+    "$date": "2024-01-28T16:07:08.268Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b6af68be1e5d3b891aec5b"
+  },
+  "name": "azucar",
+  "price": 2000,
+  "type": "PERISHABLE",
+  "dateCreate": {
+    "$date": "2024-01-28T18:57:47.204Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b6af88be1e5d3b891aec5e"
+  },
+  "name": "taza de goma",
+  "price": 2000,
+  "type": "NONPERISHABLE",
+  "dateCreate": {
+    "$date": "2024-01-28T18:57:47.204Z"
+  },
+  "__v": 0
+}]

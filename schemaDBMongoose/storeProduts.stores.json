@@ -1,0 +1,144 @@
+[{
+  "_id": {
+    "$oid": "65b52b34643a781193cf7c09"
+  },
+  "name": "Mi tienda",
+  "city": "col",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-27T16:05:03.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a308247a46095c22aab1"
+  },
+  "name": "Mi tienda",
+  "city": "ABZ",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T00:42:45.533Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a30d247a46095c22aab4"
+  },
+  "name": "Mi tienda",
+  "city": "ABZS",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T00:42:45.533Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a479c377fe3762262b51"
+  },
+  "name": "Mi tienda",
+  "city": "COL",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T00:48:55.304Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a7ee3af564e96f00e0a6"
+  },
+  "name": "Mi tienda",
+  "city": "CO3L",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T01:03:02.179Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a8a11f8109ecb36fec6e"
+  },
+  "name": "Mi tienda",
+  "city": "COL",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T01:06:27.774Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a8ca1f8109ecb36fec71"
+  },
+  "name": "Mi tienda",
+  "city": "ASM",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T01:06:27.774Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5a8fd1f8109ecb36fec75"
+  },
+  "name": "Mi tienda",
+  "city": "AFG",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T01:06:27.774Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5c59ab2195958852bab2d"
+  },
+  "name": "Mi tienda",
+  "city": "VEN",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T03:09:53.191Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b5c5b3ea119f9fd6aae89c"
+  },
+  "name": "Mi tienda",
+  "city": "ECU",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T03:10:33.796Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b6af33be1e5d3b891aec55"
+  },
+  "name": "el negro charlie",
+  "city": "ECU",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T18:57:47.159Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b6af3ebe1e5d3b891aec58"
+  },
+  "name": "dragon rojo",
+  "city": "ECU",
+  "address": "suba calle 100",
+  "dateCreate": {
+    "$date": "2024-01-28T18:57:47.159Z"
+  },
+  "__v": 0
+}]
