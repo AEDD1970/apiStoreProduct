@@ -15,3 +15,4 @@ import { StockModule } from './stock/stock.module';
   providers: [AppService],
 })
 export class AppModule {}
+//'mongodb://127.0.0.1:27017/storeProduts' esta es la coexion local solo cambiarla por la de arriba para pruebas
