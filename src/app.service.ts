@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  get(): string {
+    return 'Wellcome api store products , puder ver la documetacion en http://localhost:3002/docs';
   }
 }
