@@ -11,9 +11,6 @@ export class Products {
   @Prop({type: Number})
   price: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Store' })
-  idStore: string;
-
   @Prop()
   type: string;
 

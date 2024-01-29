@@ -17,7 +17,6 @@ export class ProductsService {
 
       //validate type product
       const errors = await validationProduct(cityToUpper)
-      console.log(errors)
       if (errors) {
         throw errors
       }
@@ -31,13 +30,13 @@ export class ProductsService {
           price
         });
         if (saveStore) {
-          return { message: 'create product', status: "OK" };
+          throw { message: 'create product', status: "OK" };
         } else {
-          return { message: 'ups error create product', status: "SERVICE_UNAVAILABLE" };
+          throw { message: 'ups error create product', status: "SERVICE_UNAVAILABLE" };
         }
       }
       else {
-        return { message: 'the product is already registered', status: "BAD_REQUEST" };
+        throw { message: 'the product is already registered', status: "BAD_REQUEST" };
       }
     } catch (error) {
       if (!error.message) {
@@ -50,24 +49,28 @@ export class ProductsService {
 
   async findAll(findAll: GetProductDto) {
     const { limit, pageNumber } = findAll;
+    const _limit= Number(limit)
+    const _pageNumber = Number(pageNumber)
     try {
       const count = await this.productModel.countDocuments({}).exec();
-      const page_total = Math.floor((count - 1) / limit) + 1;
+      const pageCurrent = Math.floor((count - 1) / _limit) + 1;
 
       const getAllStore = await this.productModel
         .find()
         .sort({ _id: 1 })
-        .skip(pageNumber > 0 ? (pageNumber - 1) * limit : 0)
-        .limit(limit)
+        .skip(_pageNumber > 0 ? (_pageNumber - 1) * _limit : 0)
+        .limit(_limit)
         .exec();
 
       if (getAllStore.length === 0) {
         throw { message: 'not have data', status: "BAD_REQUEST" };
       } else {
-        return {
+        throw {
           data: getAllStore,
-          page_total: page_total,
+          page_documents: count,
+          currentPage: pageCurrent,
           status: "OK",
+          message: "sucess"
         };
       }
     } catch (error) {
@@ -85,7 +88,7 @@ export class ProductsService {
       if (!getProduct) {
         throw { message: 'product not exist', status: "NOT_FOUND" };
       }
-      return {
+      throw {
         data: {
           product: getProduct
         },
@@ -105,9 +108,13 @@ export class ProductsService {
     try {
       const { name, type, price } = updateProductDto
       const typeToUpper = type.toUpperCase()
+      //validate exists product 
+      const getProduct = await this.productModel.findById(_id)
+      if(getProduct){
+        throw { message: 'product not exist', status: "BAD_REQUEST" };
+      }
       //validate type product
       const errors = await validationProduct(typeToUpper)
-      console.log(errors)
       if (errors) {
         throw errors
       }
@@ -133,6 +140,11 @@ export class ProductsService {
 
   async delete(_id: string) {
     try {
+        //validate exists product 
+        const getProduct = await this.productModel.findById(_id)
+        if(getProduct){
+          throw { message: 'product not exist', status: "BAD_REQUEST" };
+        }
       const deleteProduct = await this.productModel.deleteOne({ _id })
       const { deletedCount } = deleteProduct
       if (deletedCount === 1) {

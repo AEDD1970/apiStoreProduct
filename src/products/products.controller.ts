@@ -15,6 +15,7 @@ export class ProductsController {
 
   @Get()
   findAll(@Query() findAll: GetProductDto) {
+    
     return this.productsService.findAll(findAll);
   }
 

@@ -132,6 +132,10 @@ export class StoreService {
 
   async delete(_id: string) {
     try {
+      const getStore = await this.storeModel.findById(_id, { __v: 0 })
+      if (!getStore) {
+        throw { message: 'store not exist', status: "NOT_FOUND" };
+      }
       const deleteStore = await this.storeModel.deleteOne({ _id })
       const { deletedCount } = deleteStore
       if (deletedCount === 1) {
