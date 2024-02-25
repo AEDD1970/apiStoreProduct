@@ -5,7 +5,15 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors(
+    {
+      origin: [
+        "https://store-products-front-afcdneoi3-alexis-duques-projects.vercel.app"
+      ],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      
+  }
+  );
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
