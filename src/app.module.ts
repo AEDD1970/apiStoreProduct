@@ -7,8 +7,7 @@ import { ProductsModule } from './products/products.module';
 import { StockModule } from './stock/stock.module';
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb+srv://alexis:TqYIOTL6KvjFOY8a@storieproducts.ueuuvyf.mongodb.net/'),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/storeProduts'),
+    MongooseModule.forRoot('mongodb+srv://alexis:TqYIOTL6KvjFOY8a@storieproducts.ueuuvyf.mongodb.net/'),
     StoreModule,
     ProductsModule,
     StockModule],
