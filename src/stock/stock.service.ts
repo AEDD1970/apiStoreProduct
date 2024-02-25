@@ -69,9 +69,25 @@ export class StockService {
             }
           },
           {
+            $unwind: "$stockData"
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "stockData.idProduct",
+              foreignField: "_id",
+              as: "productData"
+            }
+          },
+          {
+            $unwind: "$productData"
+          },
+          {
             $project: {
-              _id: 0,
-              __v: 0
+              _id: 1, // Incluye el ID de la tienda
+              idProduct: "$productData._id",
+              name: "$productData.name",
+              stock: "$stockData.stock"
             }
           }
         ])

@@ -13,7 +13,7 @@ export class StockController {
     return this.stockService.addStoreToProduct(_ids , createStockDto);
   }
 
-  @Get('/products/stores/')
+  @Get('/products/stores')
   findAll()  {
     return this.stockService.findStoresFromProduct();
   }

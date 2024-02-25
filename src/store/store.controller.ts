@@ -14,7 +14,8 @@ export class StoreController {
   }
 
   @Get()
-  findAll(@Query() findAll: GetStoreDto) {
+  findAll(@Query() findAll: any) {
+    console.log(findAll)
     return this.storeService.findAll(findAll);
   }
 

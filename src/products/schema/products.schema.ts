@@ -14,8 +14,12 @@ export class Products {
   @Prop()
   type: string;
 
+  @Prop({default: "https://themes.pixelstrap.com/fastkart/assets/images/product/category/1.jpg"})
+  img: string
+
   @Prop({ default: new Date() })
   dateCreate: Date;
+  
 
 }
 

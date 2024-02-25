@@ -110,7 +110,7 @@ export class ProductsService {
       const typeToUpper = type.toUpperCase()
       //validate exists product 
       const getProduct = await this.productModel.findById(_id)
-      if(getProduct){
+      if(!getProduct){
         throw { message: 'product not exist', status: "BAD_REQUEST" };
       }
       //validate type product
@@ -120,7 +120,7 @@ export class ProductsService {
       }
 
       const setProduct = await this.productModel.updateOne({ _id }, {
-        $set: {
+        $set: { 
           "name": name,
           "type": type,
           "price": price
@@ -139,10 +139,12 @@ export class ProductsService {
   }
 
   async delete(_id: string) {
+    console.log(_id)
+
     try {
         //validate exists product 
-        const getProduct = await this.productModel.findById(_id)
-        if(getProduct){
+        const getProduct = await this.productModel.findById(_id, { __v: 0 })
+        if(!getProduct){
           throw { message: 'product not exist', status: "BAD_REQUEST" };
         }
       const deleteProduct = await this.productModel.deleteOne({ _id })
